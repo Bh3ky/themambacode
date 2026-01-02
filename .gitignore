@@ -1,0 +1,70 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.env
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+
+# Output files
+output/*
+!output/.gitkeep
+
+# Logs
+*.log
+
+# Images (optional if you don’t want raw inputs tracked)
+assets/samples/*
+
+
+# Byte-compiled / optimized / internal files
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+*.pylintrc
+*.egg-info
+.python-version # For tools like pyenv
+
+# Temporary files created by various tools
+.pytest_cache/
+.coverage
+
+# Distribution and packaging
+dist/
+build/
+*.egg
+
+# Virtual environment
+# Using common convention (.venv or venv)
+venv/
+.venv/
+env/
+.env/
+
+# Dependency files
+# You might want to keep these if you use tools like poetry or pip-compile,
+# but it's common to ignore auto-generated lock files
+# requirements.txt is usually kept unless it's auto-generated
+Pipfile.lock
+poetry.lock
+
+# Operating System files
+.DS_Store # Mac
+Thumbs.db # Windows
+desktop.ini
+
+# Editor/IDE files
+.vscode/ # VS Code settings/launch files
+.idea/ # IntelliJ/PyCharm project files
+*.swp # Vim swap files
+*~ # Emacs temporary files
+
