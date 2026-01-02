@@ -44,37 +44,37 @@ HALFTONE_STYLES = {
     "classic_dots": {
         "cell_size": 12,
         "max_radius": 7,
-        "brightness_threshold": 0.85,
-        "gamma": 1.4
+        "brightness_threshold": 0.85,  # Balanced threshold
+        "gamma": 1.4  # Standard gamma for good contrast
     },
     "fine_dots": {
         "cell_size": 8,
         "max_radius": 5,
-        "brightness_threshold": 0.82,\
-        "gamma": 1.6
+        "brightness_threshold": 0.82,  # Slightly lower for more detail
+        "gamma": 1.6  # Higher gamma for finer detail
     },
     "bold_dots": {
         "cell_size": 16,
         "max_radius": 10,
-        "brightness_threshold": 0.80,
-        "gamma": 1.3
+        "brightness_threshold": 0.80,  # Lower threshold for bolder effect
+        "gamma": 1.3  # Moderate gamma
     },
     "newspaper": {
         "cell_size": 10,
         "max_radius": 6,
-        "brightness_threshold": 0.88,
-        "gamma": 1.8
+        "brightness_threshold": 0.88,  # Higher threshold for newspaper look
+        "gamma": 1.8  # Higher gamma for softer newspaper style
     }
 }
 
-# qoute styling
+# quote styling
 QUOTE_CONFIG = {
     "position": "top",
-    "padding": 80,
-    "font_size": 72,
-    "repeat_count": 8, # repeat text for bold effect
+    "padding": 40,  # Reduced padding for more compact banner
+    "font_size": 64,  # Slightly smaller for better integration
+    "repeat_count": 12,  # More repetitions for continuous text effect
     "line_spacing": 8,
-    "opacity": 0.95
+    "opacity": 1.0  # Full opacity for solid banner
 }
 
 # Sample Kobe Bryant "Mamba Mentality" Quotes
