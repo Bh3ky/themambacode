@@ -1,50 +1,53 @@
-# src/core/halft_tone.py
+# src/core/half_tone.py
 
+import cv2
 import numpy as np
 from PIL import Image, ImageDraw
-from config import (
-    CELL_SIZE,
-    MAX_DOT_RADIUS,
-    BRIGHTNESS_THRESHOLD,
-    BACKGROUND_COLOR,
-    DOT_COLOR,
-)
+from typing import Dict, Tuple
 
-def generate_dot_halftone(brightness_map: np.ndarray) -> Image.Image:
+
+def generate_classic_halftone(
+    brightness_map: np.ndarray,
+    config: Dict,
+    bg_color: Tuple[int, int, int],
+    dot_color: Tuple[int, int, int]) -> Image.Image:
     """
     Generate a classic dot halftone image from brightness map.
     """
 
     height, width = brightness_map.shape
+    cell_size = int(config["cell_size"])
+    max_radius = config["max_radius"]
+    threshold = config["brightness_threshold"]
 
     # Create black canvas
-    canvas = Image.new("RGB", (width, height), BACKGROUND_COLOR)
+    canvas = Image.new("RGB", (width, height), bg_color)
     draw = ImageDraw.Draw(canvas)
 
     # Loop over sampling grid
-    for y in range(0, height, CELL_SIZE):
-        for x in range(0, width, CELL_SIZE):
+    for y in range(0, height, cell_size):
+        for x in range(0, width, cell_size):
 
             # extract cell
-            cell = brightness_map[y:y+CELL_SIZE, x:x+CELL_SIZE]
+            cell = brightness_map[y:y+cell_size, x:x+cell_size]
             if cell.size == 0:
                 continue
 
             # convert numpy scalar -> python float
-            b: float = float(np.mean(cell))
+            brightness = float(np.mean(cell))
 
             # skip highlights
-            if b > BRIGHTNESS_THRESHOLD:
+            if brightness > threshold:
                 continue
 
-            # map brightness -> radius
-            radius: float = float(MAX_DOT_RADIUS * (1 -b))
-            if radius <= 0:
+            # map brightness -> radius (darker = larger dot)
+            radius = max_radius * (1 - brightness)
+            if radius <= 0.5:
                 continue
 
             # Dot center
-            cx: float = float(x + CELL_SIZE // 2)
-            cy: float = float(y + CELL_SIZE // 2)
+            cx = x + cell_size // 2
+            cy = y + cell_size // 2
 
             # draw dot
             draw.ellipse(
@@ -54,7 +57,42 @@ def generate_dot_halftone(brightness_map: np.ndarray) -> Image.Image:
                     cx + radius,
                     cy + radius,
                 ),
-                fill=DOT_COLOR
+                fill=dot_color
             )
+    
+    return canvas
+
+def generate_line_halftone(
+    brightness_map: np.ndarray,
+    config: Dict,
+    bg_color: Tuple[int, int, int],
+    line_color: Tuple[int, int, int]
+) -> Image.Image:
+    """
+    Generate fingerprint-style contour line halftone.
+    """
+    height, width = brightness_map.shape
+    canvas = Image.new("RGB", (width, height), bg_color)
+    draw = ImageDraw.Draw(canvas)
+    
+    # Create contour lines based on brightness levels
+    line_spacing = config["cell_size"]
+    
+    for brightness_level in np.arange(0.1, 0.9, 0.05):
+        # Find contours at this brightness level
+        mask = ((brightness_map >= brightness_level - 0.025) & 
+                (brightness_map <= brightness_level + 0.025))
+        mask = mask.astype(np.uint8) * 255
+        
+        contours, _ = cv2.findContours(mask, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+        
+        for contour in contours:
+            if len(contour) > 10:  # Filter small contours
+                contour = contour.reshape(-1, 2)
+                points = [(int(x), int(y)) for [[x, y]] in contour]
+                if len(points) > 2:
+                    # Vary line width based on brightness
+                    width = max(1, int(3 * (1 - brightness_level)))
+                    draw.line(points, fill=line_color, width=width)
     
     return canvas

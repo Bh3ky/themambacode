@@ -1,6 +1,6 @@
 ## The Mamba Code: Mamba Mentality Halftone Art Generator
 
-A Python tool that generates high-quality halftone portrait art combined with **Kobe Bryant-inspired "Mamba Mentality" qoutes**, designed to program the mind for descipline, consistency, and excellence.
+A Python tool that generates high-quality halftone portrait art combined with **Kobe Bryant-inspired "Mamba Mentality" quotes**, designed to program the mind for discipline, consistency, and excellence.
 
 This project is built as a **coding challenge inspired by the Mamba mindset** - showing up daily, refining craft, and doing the work long after motivation fades. 
 
