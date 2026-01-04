@@ -38,26 +38,26 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  # Basic usage with defaults
-  python main.py --input portrait.jpg
-  
-  # Custom style and colors
-  python main.py --input photo.jpg --style fine_dots --color lakers_gold
-  
-  # Line halftone effect
-  python main.py --input photo.jpg --line-effect --color copper
-  
-  # Square dots instead of circles
-  python main.py --input photo.jpg --square-effect
-  
-  # Without quote overlay
-  python main.py --input photo.jpg --no-quote
-  
-  # Custom quote
-  python main.py --input photo.jpg --quote "YOUR CUSTOM QUOTE HERE"
-  
-  # Batch generate variations
-  python main.py --batch --input-dir ./photos --output-dir ./output --count 20
+    # Basic usage with defaults
+    python main.py --input portrait.jpg
+    
+    # Custom style and colors
+    python main.py --input photo.jpg --style fine_dots --color lakers_gold
+    
+    # Line halftone effect
+    python main.py --input photo.jpg --line-effect --color copper
+    
+    # Square dots instead of circles
+    python main.py --input photo.jpg --square-effect
+    
+    # Without quote overlay
+    python main.py --input photo.jpg --no-quote
+    
+    # Custom quote
+    python main.py --input photo.jpg --quote "YOUR CUSTOM QUOTE HERE"
+    
+    # Batch generate variations
+    python main.py --batch --input-dir ./photos --output-dir ./output --count 20
         """
     )
     
